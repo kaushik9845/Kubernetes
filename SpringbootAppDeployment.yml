@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: springboot
-        image: kaushik984/kaushik9845:latest
+        image: kaushik984/springbootpostgres
         ports:
         - containerPort: 8080
         env: 
