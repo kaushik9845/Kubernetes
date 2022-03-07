@@ -3,8 +3,9 @@ kind: Service
 metadata:
   name: db-svc
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
    - port: 5432
+     targetPort: 80
    
   
