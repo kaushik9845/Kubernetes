@@ -6,4 +6,4 @@ data:
   # property-like keys; each key maps to a simple value
   dbname: "mydb"
   username: "postgres"
-  dbsvc: "POSTGRES_DB_SVC"
+  dbsvc: "db-svc"
