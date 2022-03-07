@@ -28,7 +28,7 @@ spec:
                   key: username
             - name: POSTGRES_PASSWORD
               valueFrom:
-                secretKeyKeyRef:
+                secretKeyRef:
                   name: mysecrets           # The ConfigMap this value comes from.
                   key: dbpwd
           volumeMounts:
