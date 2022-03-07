@@ -5,5 +5,4 @@ metadata:
 spec:
   ports:
    - port: 5432
-type: post
   
