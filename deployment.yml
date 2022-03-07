@@ -1,0 +1,40 @@
+# This is your Editor pane.
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        service: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:latest
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: db           # The ConfigMap this value comes from.
+                  key: dbname
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: db           # The ConfigMap this value comes from.
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyKeyRef:
+                  name: mysecrets           # The ConfigMap this value comes from.
+                  key: dbpwd
+          volumeMounts:
+            - mountPath: "/var/lib/postgresql/data"
+              name: "mendix-pgdata"
+      volumes:
+        - hostPath:
+            path: "/home/docker/pgdata"
+          name: mendix-pgdata
