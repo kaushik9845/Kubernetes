@@ -1,17 +1,25 @@
---- 
 apiVersion: apps/v1
 kind: Deployment
-metadata: 
+metadata:
   name: postgres
-spec: 
+  labels:
+    app: postgres
+spec:
   replicas: 1
-  selector: 
-    matchLabels: 
-      app.kubernetes.io/name: postgres
-  spec: 
-    containers: 
-      - 
-        env: 
+  selector:
+    matchLabels:
+      app: potgres
+  template:
+    metadata:
+      labels:
+        app: potgres
+    spec:
+      containers:
+      - name: potgres
+        image: potgres:latest
+        ports:
+        - containerPort: 5432
+      env: 
           - 
             name: POSTGRES_DB
             valueFrom: 
@@ -30,21 +38,3 @@ spec:
               secretKeyRef: 
                 key: dbpwd
                 name: mysecrets
-        image: "postgres:latest"
-        name: postgres
-        ports: 
-          - 
-            containerPort: 5432
-        volumeMounts: 
-          - 
-            mountPath: /var/lib/postgresql/data
-            name: mendix-pgdata
-    volumes: 
-      - 
-        hostPath: 
-          path: /home/docker/pgdata
-        name: mendix-pgdata
-  template: 
-    metadata: 
-      labels: 
-        app.kubernetes.io/name: postgres
