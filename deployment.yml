@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: potgres
-        image: potgres:latest
+        image: potgres
         ports:
         - containerPort: 5432
         env: 
