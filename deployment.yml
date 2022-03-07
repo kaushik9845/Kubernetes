@@ -8,15 +8,15 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: potgres
+      app: postgres
   template:
     metadata:
       labels:
-        app: potgres
+        app: postgres
     spec:
       containers:
-      - name: potgres
-        image: potgres
+      - name: postgres
+        image: postgres
         ports:
         - containerPort: 5432
         env: 
