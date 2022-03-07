@@ -1,44 +1,50 @@
-# This is your Editor pane.
+--- 
 apiVersion: apps/v1
 kind: Deployment
-metadata:
+metadata: 
   name: postgres
-spec:
+spec: 
   replicas: 1
-  selector:
-    matchLabels:
+  selector: 
+    matchLabels: 
       app.kubernetes.io/name: postgres
-    
-  template:
-    metadata:
-      labels:
-        service: postgres
-    spec:
-      containers:
-        - name: postgres
-          image: postgres:latest
-          ports:
-            - containerPort: 5432
-          env:
-            - name: POSTGRES_DB
-              valueFrom:
-                configMapKeyRef:
-                  name: db           # The ConfigMap this value comes from.
-                  key: dbname
-            - name: POSTGRES_USER
-              valueFrom:
-                configMapKeyRef:
-                  name: db           # The ConfigMap this value comes from.
-                  key: username
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: mysecrets           # The ConfigMap this value comes from.
-                  key: dbpwd
-          volumeMounts:
-            - mountPath: "/var/lib/postgresql/data"
-              name: "mendix-pgdata"
-      volumes:
-        - hostPath:
-            path: "/home/docker/pgdata"
-          name: mendix-pgdata
+  spec: 
+    containers: 
+      - 
+        env: 
+          - 
+            name: POSTGRES_DB
+            valueFrom: 
+              configMapKeyRef: 
+                key: dbname
+                name: db
+          - 
+            name: POSTGRES_USER
+            valueFrom: 
+              configMapKeyRef: 
+                key: username
+                name: db
+          - 
+            name: POSTGRES_PASSWORD
+            valueFrom: 
+              secretKeyRef: 
+                key: dbpwd
+                name: mysecrets
+        image: "postgres:latest"
+        name: postgres
+        ports: 
+          - 
+            containerPort: 5432
+        volumeMounts: 
+          - 
+            mountPath: /var/lib/postgresql/data
+            name: mendix-pgdata
+    volumes: 
+      - 
+        hostPath: 
+          path: /home/docker/pgdata
+        name: mendix-pgdata
+  template: 
+    metadata: 
+      labels: 
+        app.kubernetes.io/name: postgres
