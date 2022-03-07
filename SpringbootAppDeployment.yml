@@ -38,3 +38,9 @@ spec:
               secretKeyRef: 
                 key: dbpwd
                 name: mysecrets
+          - 
+            name: POSTGRES_DB_SVC
+            valueFrom: 
+              configMapKeyRef: 
+                key: dbsvc
+                name: db
