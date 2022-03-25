@@ -1,0 +1,75 @@
+---
+apiVersion: "v1"
+kind: "Secret"
+metadata:
+  name: "postgres1-secret-h32d"
+  namespace: "default"
+  labels:
+    app: "postgres1"
+data:
+  ##this is base64 
+  POSTGRES_PASSWORD: "cm9vdA=="
+
+---
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: "postgres1-config-h32d"
+  namespace: "default"
+  labels:
+    app: "postgres1"
+data:
+  POSTGRES_USER: "postgres1"
+  POSTGRES_PASSWORD: "root"
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "postgres1"
+  namespace: "default"
+  labels:
+    app: "postgres1"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: "postgres1"
+  template:
+    metadata:
+      labels:
+        app: "postgres1"
+    spec:
+      containers:
+      - name: "postgres-1"
+        image: "postgres"
+        env:
+        - name: "POSTGRES_USER"
+          valueFrom:
+            configMapKeyRef:
+              key: "POSTGRES_USER"
+              name: "postgres1-config-h32d"
+        - name: "POSTGRES_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              key: "POSTGRES_PASSWORD"
+              name: "postgres1-secret-h32d"
+---
+apiVersion: "autoscaling/v2beta1"
+kind: "HorizontalPodAutoscaler"
+metadata:
+  name: "postgres1-hpa-nk7r"
+  namespace: "default"
+  labels:
+    app: "postgres1"
+spec:
+  scaleTargetRef:
+    kind: "Deployment"
+    name: "postgres1"
+    apiVersion: "apps/v1"
+  minReplicas: 1
+  maxReplicas: 1
+  metrics:
+  - type: "Resource"
+    resource:
+      name: "cpu"
+      targetAverageUtilization: 80
