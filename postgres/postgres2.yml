@@ -28,16 +28,16 @@ metadata:
   name: "postgres2"
   namespace: "default"
   labels:
-    app: "postgres1"
+    app: "postgres2"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: "postgres1"
+      app: "postgres2"
   template:
     metadata:
       labels:
-        app: "postgres1"
+        app: "postgres2"
     spec:
       containers:
       - name: "postgres-2"
@@ -60,10 +60,10 @@ spec:
 apiVersion: "autoscaling/v2beta1"
 kind: "HorizontalPodAutoscaler"
 metadata:
-  name: "postgres1-hpa-nk7r"
+  name: "postgres2-hpa-nk7r"
   namespace: "default"
   labels:
-    app: "postgres1"
+    app: "postgres2"
 spec:
   scaleTargetRef:
     kind: "Deployment"
