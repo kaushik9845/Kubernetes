@@ -43,7 +43,7 @@ spec:
       - name: "postgres-2"
         image: "postgres"
         ports: 
-        - containerPort: 5432
+        - containerPort: 5431
         env:
         - name: "POSTGRES_USER"
           valueFrom:
