@@ -42,6 +42,8 @@ spec:
       containers:
       - name: "postgres-2"
         image: "postgres"
+        ports: 
+        - containerPort: 5432
         env:
         - name: "POSTGRES_USER"
           valueFrom:
@@ -53,6 +55,7 @@ spec:
             secretKeyRef:
               key: "POSTGRES_PASSWORD2"
               name: "postgres1-secret-h32d"
+         
 ---
 apiVersion: "autoscaling/v2beta1"
 kind: "HorizontalPodAutoscaler"
