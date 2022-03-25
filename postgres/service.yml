@@ -8,10 +8,12 @@ metadata:
     app: "postgres1"
 spec:
   ports:
-  - protocol: "TCP"
+  - name: "postgres1db"
+    protocol: "TCP"
     port: 5432
     targetPort: 5432
-  - protocol: "TCP"  
+  - name: "postgres1db"
+    protocol: "TCP"  
     port: 5431
     targetPort: 5431
   selector:
